@@ -39,9 +39,8 @@ const customers = [
 ];
 
 const users = [
-  ['usr_manager_001', 'manager', 'manager@kalonpos.com', 'manager', 'active'],
-  ['usr_cashier_001', 'cashier', 'cashier@kalonpos.com', 'cashier', 'active'],
-  ['usr_stock_001', 'stock', 'stock@kalonpos.com', 'inventory', 'active'],
+  ['usr_manager_001', 'manager', 'manager@hairmartpos.com', 'manager', 'active'],
+  ['usr_cashier_001', 'cashier', 'cashier@hairmartpos.com', 'cashier', 'active'],
 ];
 
 const sales = [

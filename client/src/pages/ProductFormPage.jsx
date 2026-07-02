@@ -6,7 +6,7 @@ import FormField from '../components/FormField.jsx';
 import InlineNotice from '../components/InlineNotice.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
-import { apiFetch, getApiData, getApiPage } from '../lib/api.js';
+import { apiFetch, apiUpload, getApiData, getApiPage } from '../lib/api.js';
 import { useApiResource } from '../lib/useApiResource.js';
 
 export default function ProductFormPage() {
@@ -64,18 +64,7 @@ export default function ProductFormPage() {
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await fetch('/api/v1/uploads', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const error = await response.json().catch(() => ({}));
-        throw new Error(error.message ?? 'Upload failed');
-      }
-
-      const payload = await response.json();
+      const payload = await apiUpload('/uploads', formData);
       setForm({ ...form, imageUrl: payload.data.imageUrl });
     } catch (error) {
       setUploadError(error.message ?? 'Failed to upload image');

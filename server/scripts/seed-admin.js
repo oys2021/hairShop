@@ -5,9 +5,9 @@ await initializeDatabase({ seed: false });
 
 const result = await seedAdministrator({
   username: process.env.ADMIN_USERNAME ?? 'administrator',
-  email: process.env.ADMIN_EMAIL ?? 'administrator@kalonpos.com',
+  email: process.env.ADMIN_EMAIL ?? 'administrator@hairmartpos.com',
   password: process.env.ADMIN_PASSWORD ?? 'password',
-  role: process.env.ADMIN_ROLE ?? 'owner',
+  role: process.env.ADMIN_ROLE ?? 'admin',
 });
 
 if (result.created) {

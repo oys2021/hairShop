@@ -18,7 +18,7 @@ export default {
         },
       },
       boxShadow: {
-        panel: '0 3px 0 rgba(32, 36, 42, 0.06)',
+        panel: '0 12px 32px rgba(15, 23, 42, 0.06)',
       },
       fontFamily: {
         sans: ['Inter', 'Segoe UI', 'Arial', 'sans-serif'],

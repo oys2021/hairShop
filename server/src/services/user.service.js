@@ -10,6 +10,8 @@ import { buildPaginationMeta, readPagination } from '../utils/pagination.js';
 import { HttpError } from '../utils/http-error.js';
 import { toPublicUser } from '../repositories/auth.repository.js';
 
+const VALID_ROLES = ['admin', 'manager', 'cashier'];
+
 export async function readUsers(query) {
   const pagination = readPagination(query);
   const result = await listUsers({ ...pagination, search: query.search });
@@ -35,12 +37,18 @@ export async function addUser(payload) {
     throw new HttpError(400, 'Username, email, and password are required');
   }
 
+  const role = payload.role ? String(payload.role).trim().toLowerCase() : 'cashier';
+
+  if (!VALID_ROLES.includes(role)) {
+    throw new HttpError(400, 'Role must be admin, manager, or cashier');
+  }
+
   const user = await createUser({
     id: payload.id ?? createId('usr'),
     username: payload.username.trim(),
     email: payload.email.trim(),
     password: payload.password,
-    role: payload.role ?? 'staff',
+    role,
     status: payload.status ?? 'active',
   });
 
@@ -48,10 +56,14 @@ export async function addUser(payload) {
 }
 
 export async function editUser(id, payload) {
+  if (payload.role && !VALID_ROLES.includes(String(payload.role).trim().toLowerCase())) {
+    throw new HttpError(400, 'Role must be admin, manager, or cashier');
+  }
+
   const user = await updateUser(id, {
     ...(payload.username ? { username: payload.username.trim() } : {}),
     ...(payload.email ? { email: payload.email.trim() } : {}),
-    ...(payload.role ? { role: payload.role } : {}),
+    ...(payload.role ? { role: String(payload.role).trim().toLowerCase() } : {}),
     ...(payload.status ? { status: payload.status } : {}),
     ...(payload.password ? { password: payload.password } : {}),
   });

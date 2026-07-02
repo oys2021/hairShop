@@ -34,7 +34,7 @@ test('getAuthenticatedSession returns safe session data', async () => {
   const result = await getAuthenticatedSession(login.token);
 
   assert.equal(result.user.username, 'administrator');
-  assert.equal(result.claims.role, 'owner');
+  assert.equal(result.claims.role, 'admin');
 });
 
 test('authenticateUser rejects wrong credentials', async () => {

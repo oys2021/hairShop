@@ -1,4 +1,4 @@
-# Kalon POS Backend
+# HairMart POS Backend
 
 ES module Express backend skeleton with layered controllers, services, repositories, Sequelize models, and seeders.
 
@@ -49,7 +49,7 @@ For PostgreSQL later, install the `pg` driver and switch the env values:
 DB_DIALECT=postgres
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_NAME=kalon_pos
+DB_NAME=hairmart_pos
 DB_USER=postgres
 DB_PASSWORD=your-password
 ```

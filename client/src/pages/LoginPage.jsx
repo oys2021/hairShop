@@ -1,9 +1,10 @@
 import { Lock, User } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import Logo from '../components/Logo.jsx';
 import { apiFetch } from '../lib/api.js';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function ProductBackdrop() {
   return (
@@ -35,10 +36,15 @@ function ProductBackdrop() {
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { user, loading: authLoading, reloadUser } = useAuth();
   const [username, setUsername] = useState('administrator');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  if (!authLoading && user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const submitLogin = async (event) => {
     event.preventDefault();
@@ -49,6 +55,7 @@ export default function LoginPage() {
         method: 'POST',
         body: { username, password },
       });
+      await reloadUser();
       navigate('/loading');
     } catch (err) {
       setError(err.message ?? 'Invalid credentials');

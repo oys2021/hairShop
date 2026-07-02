@@ -8,7 +8,11 @@ const styles = {
 
 export default function Button({ children, variant = 'primary', className = '', type = 'button', ...props }) {
   return (
-    <button type={type} className={`${styles[variant] ?? styles.primary} ${className}`} {...props}>
+    <button
+      type={type}
+      className={`${styles[variant] ?? styles.primary} disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );

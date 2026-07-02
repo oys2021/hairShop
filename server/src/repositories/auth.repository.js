@@ -1,6 +1,10 @@
 import { col, fn, Op, where } from 'sequelize';
 import { initializeDatabase, models } from '../database/sequelize.js';
 
+function normalizeRole(role) {
+  return role;
+}
+
 function mapUserModel(user) {
   if (!user) {
     return null;
@@ -11,7 +15,7 @@ function mapUserModel(user) {
     username: user.username,
     email: user.email,
     passwordHash: user.passwordHash,
-    role: user.role,
+    role: normalizeRole(user.role),
     status: user.status,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
@@ -50,7 +54,7 @@ export function toPublicUser(user) {
     id: user.id,
     username: user.username,
     email: user.email,
-    role: user.role,
+    role: normalizeRole(user.role),
     status: user.status,
     createdAt: user.createdAt,
   };

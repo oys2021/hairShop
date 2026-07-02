@@ -10,7 +10,7 @@
   body {
     margin: 0;
     min-width: 320px;
-    background: #f7f9fb;
+    background: #f4f6f8;
     color: #20242a;
   }
 
@@ -23,11 +23,11 @@
 
 @layer components {
   .panel {
-    @apply rounded-lg border border-brand-line bg-white shadow-panel;
+    @apply rounded-lg border border-slate-200 bg-white shadow-panel;
   }
 
   .control {
-    @apply h-11 rounded-lg border border-brand-line bg-white px-4 text-sm text-brand-ink outline-none transition focus:border-brand-orange focus:ring-4 focus:ring-orange-100;
+    @apply h-11 rounded-lg border border-slate-200 bg-white px-4 text-sm text-brand-ink outline-none transition focus:border-brand-orange focus:ring-4 focus:ring-orange-100;
   }
 
   .label {

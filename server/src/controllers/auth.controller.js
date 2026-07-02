@@ -36,7 +36,7 @@ function destroySession(req) {
 
 export async function login(req, res) {
   const authenticated = await authenticateUser(req.body);
-  const clientIp = req.ip || req.connection.remoteAddress;
+  const clientIp = req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress;
 
   req.session.auth = {
     token: authenticated.token,
@@ -81,7 +81,7 @@ export async function getMe(req, res) {
 }
 
 export async function logout(req, res) {
-  const clientIp = req.ip || req.connection.remoteAddress;
+  const clientIp = req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress;
   const userId = req.session.auth?.userId;
 
   await destroySession(req);

@@ -32,6 +32,25 @@ export async function apiFetch(path, options = {}) {
   return payload;
 }
 
+export async function apiUpload(path, formData) {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    credentials: 'include',
+    method: 'POST',
+    body: formData,
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    if (response.status === 401 && !window.location.pathname.startsWith('/login')) {
+      window.location.href = '/login';
+    }
+    throw new ApiError(payload.message ?? 'Upload failed', response.status);
+  }
+
+  return payload;
+}
+
 export function getApiData(path) {
   return apiFetch(path).then((payload) => payload.data);
 }

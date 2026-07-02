@@ -6,7 +6,7 @@ import Logo from '../components/Logo.jsx';
 import { apiFetch } from '../lib/api.js';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState('administrator@kalonpos.com');
+  const [email, setEmail] = useState('administrator@hairmartpos.com');
   const [message, setMessage] = useState('');
   const [resetToken, setResetToken] = useState('');
   const [loading, setLoading] = useState(false);

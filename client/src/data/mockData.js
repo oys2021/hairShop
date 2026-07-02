@@ -192,11 +192,11 @@ export const customers = [
 ];
 
 export const users = [
-  { username: 'admin@kalonpos.com', role: 'Owner', status: 'Active', lastLogin: 'Jul 1, 2026', created: 'May 1, 2026' },
-  { username: 'manager@kalonpos.com', role: 'Manager', status: 'Active', lastLogin: 'Jul 1, 2026', created: 'May 8, 2026' },
-  { username: 'cashier@kalonpos.com', role: 'Cashier', status: 'Active', lastLogin: 'Jun 30, 2026', created: 'May 11, 2026' },
-  { username: 'stock@kalonpos.com', role: 'Inventory', status: 'Active', lastLogin: 'Jun 29, 2026', created: 'May 12, 2026' },
-  { username: 'temp@kalonpos.com', role: 'Cashier', status: 'Locked', lastLogin: 'Jun 2, 2026', created: 'May 24, 2026' },
+  { username: 'admin@hairmartpos.com', role: 'Admin', status: 'Active', lastLogin: 'Jul 1, 2026', created: 'May 1, 2026' },
+  { username: 'manager@hairmartpos.com', role: 'Manager', status: 'Active', lastLogin: 'Jul 1, 2026', created: 'May 8, 2026' },
+  { username: 'cashier@hairmartpos.com', role: 'Cashier', status: 'Active', lastLogin: 'Jun 30, 2026', created: 'May 11, 2026' },
+  { username: 'stock@hairmartpos.com', role: 'Inventory', status: 'Active', lastLogin: 'Jun 29, 2026', created: 'May 12, 2026' },
+  { username: 'temp@hairmartpos.com', role: 'Cashier', status: 'Locked', lastLogin: 'Jun 2, 2026', created: 'May 24, 2026' },
 ];
 
 export const inventoryBars = [

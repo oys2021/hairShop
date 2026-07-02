@@ -41,7 +41,7 @@ export class User extends Model {
         role: {
           type: DataTypes.STRING(50),
           allowNull: false,
-          defaultValue: 'staff',
+          defaultValue: 'cashier',
         },
         status: {
           type: DataTypes.STRING(30),

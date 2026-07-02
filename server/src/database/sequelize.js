@@ -48,7 +48,17 @@ export async function initializeDatabase({ seed = true } = {}) {
   if (!initializationPromise) {
     initializationPromise = (async () => {
       await sequelize.authenticate();
-      await sequelize.sync();
+
+      try {
+        await sequelize.sync({ alter: env.DB_SYNC_ALTER });
+      } catch (error) {
+        if (env.DB_SYNC_ALTER && error?.name === 'SequelizeDatabaseError') {
+          console.warn('Database alter sync failed. Falling back to non-alter sync.');
+          await sequelize.sync();
+        } else {
+          throw error;
+        }
+      }
 
       if (seed) {
         await seedAdministrator();
