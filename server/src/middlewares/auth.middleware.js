@@ -1,5 +1,6 @@
 import { verifySessionToken } from '../services/auth.service.js';
 import { HttpError } from '../utils/http-error.js';
+import { env } from '../config/env.js';
 
 export function requireAuth(req, res, next) {
   Promise.resolve().then(async () => {
@@ -13,6 +14,14 @@ export function requireAuth(req, res, next) {
     req.auth = authenticated;
     next();
   }).catch((error) => {
+    if (error?.status === 401 && req.session) {
+      req.session.destroy(() => {
+        res.clearCookie(env.SESSION_COOKIE_NAME);
+        next(error);
+      });
+      return;
+    }
+
     next(error);
   });
 }
