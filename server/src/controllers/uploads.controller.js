@@ -14,7 +14,9 @@ export async function uploadImage(req, res) {
     action: 'upload',
     entityType: 'image',
     userId: req.auth?.user?.id,
-    changes: {
+    url: req.originalUrl,
+    httpMethod: req.method,
+    payload: {
       filename: req.file.filename,
       size: req.file.size,
       mimetype: req.file.mimetype,

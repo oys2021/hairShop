@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { models } from '../database/sequelize.js';
 import { createId } from '../utils/ids.js';
 
@@ -6,6 +7,9 @@ export async function createAuditLog({
   entityType,
   entityId,
   userId,
+  url,
+  httpMethod,
+  payload,
   changes,
   ipAddress,
 }) {
@@ -15,6 +19,9 @@ export async function createAuditLog({
     entityType,
     entityId,
     userId,
+    url,
+    httpMethod,
+    payload: payload ? JSON.stringify(payload) : null,
     changes: changes ? JSON.stringify(changes) : null,
     ipAddress,
   });
@@ -36,9 +43,10 @@ export async function listAuditLogs({
   if (userId) where.userId = userId;
 
   if (startDate || endDate) {
-    where.createdAt = {};
-    if (startDate) where.createdAt.$gte = new Date(startDate);
-    if (endDate) where.createdAt.$lte = new Date(endDate);
+    const createdAt = {};
+    if (startDate) createdAt[Op.gte] = new Date(startDate);
+    if (endDate) createdAt[Op.lte] = new Date(endDate);
+    where.createdAt = createdAt;
   }
 
   const result = await models.AuditLog.findAndCountAll({
@@ -50,7 +58,7 @@ export async function listAuditLogs({
         attributes: ['id', 'username'],
       },
     ],
-    order: [['createdAt', 'DESC']],
+    order: [['created_at', 'DESC']],
     limit,
     offset,
   });

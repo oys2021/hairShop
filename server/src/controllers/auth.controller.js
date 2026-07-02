@@ -49,6 +49,9 @@ export async function login(req, res) {
   await logAction({
     action: 'login',
     userId: authenticated.user.id,
+    url: req.originalUrl,
+    httpMethod: req.method,
+    payload: { username: req.body.username },
     ipAddress: clientIp,
   });
 
@@ -88,6 +91,8 @@ export async function logout(req, res) {
     await logAction({
       action: 'logout',
       userId,
+      url: req.originalUrl,
+      httpMethod: req.method,
       ipAddress: clientIp,
     });
   }

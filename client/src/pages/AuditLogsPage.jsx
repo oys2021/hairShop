@@ -28,6 +28,9 @@ const ENTITY_TYPES = [
 
 function formatDate(isoDate) {
   const date = new Date(isoDate);
+  if (!Number.isFinite(date.getTime())) {
+    return '-';
+  }
   return date.toLocaleString();
 }
 
@@ -45,6 +48,24 @@ function formatChanges(changes) {
     }
   }
   return JSON.stringify(changes, null, 2);
+}
+
+function formatPayload(payload) {
+  if (!payload) return '-';
+  if (typeof payload === 'string') {
+    try {
+      payload = JSON.parse(payload);
+    } catch {
+      return payload;
+    }
+  }
+  return JSON.stringify(payload, null, 2);
+}
+
+function truncateText(text, maxLength = 50) {
+  if (!text) return '-';
+  const value = typeof text === 'string' ? text : JSON.stringify(text);
+  return value.length > maxLength ? `${value.slice(0, maxLength)}…` : value;
 }
 
 export default function AuditLogsPage() {
@@ -71,6 +92,14 @@ export default function AuditLogsPage() {
     {
       header: 'Entity',
       render: (log) => log.entityType ? `${log.entityType}${log.entityId ? ` (${log.entityId})` : ''}` : '-',
+    },
+    {
+      header: 'Method',
+      render: (log) => log.httpMethod || '-',
+    },
+    {
+      header: 'URL',
+      render: (log) => truncateText(log.url, 40),
     },
     {
       header: 'User',
@@ -181,6 +210,22 @@ export default function AuditLogsPage() {
                     <p className="font-bold text-brand-muted">Timestamp</p>
                     <p>{formatDate(log.createdAt)}</p>
                   </div>
+                  <div>
+                    <p className="font-bold text-brand-muted">Request URL</p>
+                    <p className="font-mono break-words">{log.url || '-'}</p>
+                  </div>
+                  <div>
+                    <p className="font-bold text-brand-muted">HTTP Method</p>
+                    <p>{log.httpMethod || '-'}</p>
+                  </div>
+                  {log.payload && (
+                    <div>
+                      <p className="font-bold text-brand-muted">Payload</p>
+                      <pre className="mt-2 overflow-x-auto rounded bg-slate-50 p-3 text-xs">
+                        {formatPayload(log.payload)}
+                      </pre>
+                    </div>
+                  )}
                   {log.changes && (
                     <div>
                       <p className="font-bold text-brand-muted">Changes</p>

@@ -9,6 +9,21 @@ function serializeAuditLog(log) {
   return log.toJSON();
 }
 
+function sanitizePayload(payload) {
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  const sanitized = { ...payload };
+  ['password', 'passwordHash', 'newPassword', 'confirmPassword', 'currentPassword'].forEach((key) => {
+    if (key in sanitized) {
+      delete sanitized[key];
+    }
+  });
+
+  return sanitized;
+}
+
 export async function readAuditLogs(query, clientIp) {
   const pagination = readPagination(query);
 
@@ -37,6 +52,9 @@ export async function logAction({
   entityType,
   entityId,
   userId,
+  url,
+  httpMethod,
+  payload,
   changes,
   ipAddress,
 }) {
@@ -45,6 +63,9 @@ export async function logAction({
     entityType,
     entityId,
     userId,
+    url,
+    httpMethod,
+    payload: sanitizePayload(payload),
     changes,
     ipAddress,
   });

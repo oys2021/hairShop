@@ -9,6 +9,9 @@ export class AuditLog extends Model {
       entityId: this.entityId,
       userId: this.userId,
       userUsername: this.user?.username ?? 'Unknown',
+      url: this.url,
+      httpMethod: this.httpMethod,
+      payload: this.payload ? JSON.parse(this.payload) : null,
       changes: this.changes ? JSON.parse(this.changes) : null,
       ipAddress: this.ipAddress,
       createdAt: this.createdAt,
@@ -44,6 +47,21 @@ export class AuditLog extends Model {
           type: DataTypes.STRING(40),
           allowNull: true,
           field: 'user_id',
+        },
+        url: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          comment: 'Request URL that triggered the audit log',
+        },
+        httpMethod: {
+          type: DataTypes.STRING(10),
+          allowNull: true,
+          field: 'http_method',
+        },
+        payload: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          comment: 'JSON payload associated with the action',
         },
         changes: {
           type: DataTypes.TEXT,
