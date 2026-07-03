@@ -13,15 +13,11 @@ npm test
 
 ## Database
 
-Local testing uses Sequelize with SQLite storage.
+Production uses Sequelize with PostgreSQL.
 
-Default database file:
+For Railway, attach a PostgreSQL database to the backend service and let Railway provide `DATABASE_URL`. The backend will automatically use PostgreSQL when `DATABASE_URL` exists.
 
-```text
-server/data/kalon-pos.sqlite
-```
-
-The app initializes Sequelize models with `sequelize.sync()` and seeds the admin account plus demo catalog data on first startup:
+The app initializes Sequelize models with `sequelize.sync()` and seeds the admin account on first startup:
 
 ```json
 {
@@ -36,14 +32,18 @@ You can also run the admin seed manually:
 npm run seed:admin
 ```
 
-SQLite config:
+Railway production config:
 
 ```env
-DB_DIALECT=sqlite
-DB_STORAGE=./data/kalon-pos.sqlite
+NODE_ENV=production
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+CORS_ORIGIN=https://your-frontend-domain.up.railway.app
+COOKIE_SECURE=true
+SESSION_SECRET=replace-with-a-long-random-secret
+JWT_SECRET=replace-with-another-long-random-secret
 ```
 
-For PostgreSQL later, install the `pg` driver and switch the env values:
+Local PostgreSQL config:
 
 ```env
 DB_DIALECT=postgres
@@ -52,6 +52,7 @@ DB_PORT=5432
 DB_NAME=hairmart_pos
 DB_USER=postgres
 DB_PASSWORD=your-password
+DB_SSL=false
 ```
 
 Override the first admin credentials with environment variables:

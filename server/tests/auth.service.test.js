@@ -21,7 +21,7 @@ test('verifySessionToken verifies token stored in session', async () => {
 
   const result = await verifySessionToken(login.token);
 
-  assert.equal(result.user.email, 'administrator@kalonpos.com');
+  assert.equal(result.user.email, 'administrator@hairmartpos.com');
   assert.equal(result.claims.username, 'administrator');
 });
 

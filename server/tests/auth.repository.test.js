@@ -6,7 +6,7 @@ test('findUserByLogin returns seeded administrator by username', async () => {
   const user = await findUserByLogin('administrator');
 
   assert.equal(user.username, 'administrator');
-  assert.equal(user.email, 'administrator@kalonpos.com');
+  assert.equal(user.email, 'administrator@hairmartpos.com');
 });
 
 test('toPublicUser removes password hash', async () => {

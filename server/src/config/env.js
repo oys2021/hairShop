@@ -22,10 +22,16 @@ function toBoolean(value, fallback) {
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 const sessionSecret = process.env.SESSION_SECRET ?? 'dev-session-secret-change-me';
 const jwtSecret = process.env.JWT_SECRET ?? 'dev-jwt-secret-change-me';
+const databaseUrl = process.env.DATABASE_URL;
+const dbDialect = process.env.DB_DIALECT ?? (databaseUrl || nodeEnv === 'production' ? 'postgres' : 'sqlite');
 
 if (nodeEnv === 'production') {
   if (sessionSecret.startsWith('dev-') || jwtSecret.startsWith('dev-')) {
     throw new Error('SESSION_SECRET and JWT_SECRET must be configured in production.');
+  }
+
+  if (dbDialect === 'sqlite') {
+    throw new Error('PostgreSQL is required in production. Set DATABASE_URL or DB_DIALECT=postgres.');
   }
 }
 
@@ -43,13 +49,15 @@ export const env = Object.freeze({
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN ?? '8h',
   JWT_ISSUER: process.env.JWT_ISSUER ?? 'hairmart-pos-api',
   JWT_AUDIENCE: process.env.JWT_AUDIENCE ?? 'hairmart-pos-admin',
-  DB_DIALECT: process.env.DB_DIALECT ?? 'sqlite',
-  DB_HOST: process.env.DB_HOST ?? '127.0.0.1',
-  DB_PORT: toNumber(process.env.DB_PORT, 5432),
-  DB_NAME: process.env.DB_NAME ?? 'hairmart_pos',
-  DB_USER: process.env.DB_USER ?? 'postgres',
-  DB_PASSWORD: process.env.DB_PASSWORD ?? '',
+  DATABASE_URL: databaseUrl,
+  DB_DIALECT: dbDialect,
+  DB_HOST: process.env.DB_HOST ?? process.env.PGHOST ?? '127.0.0.1',
+  DB_PORT: toNumber(process.env.DB_PORT ?? process.env.PGPORT, 5432),
+  DB_NAME: process.env.DB_NAME ?? process.env.PGDATABASE ?? 'hairmart_pos',
+  DB_USER: process.env.DB_USER ?? process.env.PGUSER ?? 'postgres',
+  DB_PASSWORD: process.env.DB_PASSWORD ?? process.env.PGPASSWORD ?? '',
   DB_LOGGING: toBoolean(process.env.DB_LOGGING, false),
+  DB_SSL: toBoolean(process.env.DB_SSL, false),
   DB_SYNC_ALTER: toBoolean(process.env.DB_SYNC_ALTER, false),
   DB_STORAGE: process.env.DB_STORAGE
     ? path.resolve(process.cwd(), process.env.DB_STORAGE)

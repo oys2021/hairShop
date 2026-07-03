@@ -65,7 +65,7 @@ test('getMe returns authenticated user from session token', async () => {
   await getMe(req, meRes);
 
   assert.equal(meRes.statusCode, 200);
-  assert.equal(meRes.body.data.user.email, 'administrator@kalonpos.com');
+  assert.equal(meRes.body.data.user.email, 'administrator@hairmartpos.com');
 });
 
 test('logout destroys session and clears cookie', async () => {

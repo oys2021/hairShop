@@ -26,9 +26,27 @@ function createSequelize() {
     });
   }
 
+  const dialectOptions = env.DB_SSL
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {};
+
+  if (env.DATABASE_URL) {
+    return new Sequelize(env.DATABASE_URL, {
+      ...commonOptions,
+      dialect: env.DB_DIALECT,
+      dialectOptions,
+    });
+  }
+
   return new Sequelize(env.DB_NAME, env.DB_USER, env.DB_PASSWORD, {
     ...commonOptions,
     dialect: env.DB_DIALECT,
+    dialectOptions,
     host: env.DB_HOST,
     port: env.DB_PORT,
   });
