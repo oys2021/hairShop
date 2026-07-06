@@ -8,7 +8,12 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "test": "node --test --test-concurrency=1 \"tests/*.test.js\"",
-    "seed:admin": "node scripts/seed-admin.js"
+    "seed:admin": "node scripts/seed-admin.js",
+    "db:migrate": "node scripts/db-migrate.js",
+    "db:seed": "node scripts/db-seed.js",
+    "db:seed:demo": "node scripts/db-seed.js --demo",
+    "db:setup": "node scripts/db-setup.js",
+    "db:setup:demo": "node scripts/db-setup.js --demo"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

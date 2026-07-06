@@ -10,6 +10,11 @@
   "scripts": {
     "start": "cd server && npm start",
     "dev": "cd server && npm run dev",
-    "build": "cd client && npm install && npm run build && cd ../server && npm install"
+    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "db:migrate": "cd server && npm run db:migrate",
+    "db:seed": "cd server && npm run db:seed",
+    "db:seed:demo": "cd server && npm run db:seed:demo",
+    "db:setup": "cd server && npm run db:setup",
+    "db:setup:demo": "cd server && npm run db:setup:demo"
   }
 }
