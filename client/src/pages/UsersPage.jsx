@@ -167,9 +167,10 @@ export default function UsersPage() {
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               <FormField label="Role">
                 <select className="control w-full" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}>
-                  <option value="cashier">Cashier</option>
-                  <option value="manager">Manager</option>
+                  <option value="owner">Owner</option>
                   <option value="admin">Admin</option>
+                  <option value="manager">Manager</option>
+                  <option value="cashier">Cashier</option>
                 </select>
               </FormField>
               <FormField label="Status">

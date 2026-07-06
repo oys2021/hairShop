@@ -7,10 +7,10 @@ import { asyncHandler } from '../utils/async-handler.js';
 const router = Router();
 
 router.use(requireAuth);
-router.get('/', allowRoles('admin', 'manager'), asyncHandler(getUsers));
-router.post('/', allowRoles('admin', 'manager'), asyncHandler(createUser));
-router.get('/:id', allowRoles('admin', 'manager'), asyncHandler(getUser));
-router.put('/:id', allowRoles('admin', 'manager'), asyncHandler(updateUser));
-router.delete('/:id', allowRoles('admin', 'manager'), asyncHandler(deleteUser));
+router.get('/', allowRoles('owner', 'admin', 'manager'), asyncHandler(getUsers));
+router.post('/', allowRoles('owner', 'admin', 'manager'), asyncHandler(createUser));
+router.get('/:id', allowRoles('owner', 'admin', 'manager'), asyncHandler(getUser));
+router.put('/:id', allowRoles('owner', 'admin', 'manager'), asyncHandler(updateUser));
+router.delete('/:id', allowRoles('owner', 'admin', 'manager'), asyncHandler(deleteUser));
 
 export default router;

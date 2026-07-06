@@ -15,6 +15,9 @@ import SalesPage from './pages/SalesPage.jsx';
 import UsersPage from './pages/UsersPage.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 
+const MANAGEMENT_ROLES = ['owner', 'admin', 'manager'];
+const ADMIN_ROLES = ['owner', 'admin'];
+
 function RequireAuth({ children }) {
   const { loading, user } = useAuth();
 
@@ -65,7 +68,7 @@ export default function App() {
         <Route
           path="/products"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <ProductsPage />
             </RequireRole>
           }
@@ -73,7 +76,7 @@ export default function App() {
         <Route
           path="/products/new"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <ProductFormPage />
             </RequireRole>
           }
@@ -81,7 +84,7 @@ export default function App() {
         <Route
           path="/products/:productId/edit"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <ProductFormPage />
             </RequireRole>
           }
@@ -89,7 +92,7 @@ export default function App() {
         <Route
           path="/categories"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <CategoriesPage />
             </RequireRole>
           }
@@ -97,7 +100,7 @@ export default function App() {
         <Route
           path="/categories/new"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <CategoriesPage mode="add" />
             </RequireRole>
           }
@@ -109,7 +112,7 @@ export default function App() {
         <Route
           path="/customers"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <CustomersPage />
             </RequireRole>
           }
@@ -117,7 +120,7 @@ export default function App() {
         <Route
           path="/users"
           element={
-            <RequireRole roles={['admin', 'manager']}>
+            <RequireRole roles={MANAGEMENT_ROLES}>
               <UsersPage />
             </RequireRole>
           }
@@ -125,7 +128,7 @@ export default function App() {
         <Route
           path="/audit-logs"
           element={
-            <RequireRole roles={['admin']}>
+            <RequireRole roles={ADMIN_ROLES}>
               <AuditLogsPage />
             </RequireRole>
           }

@@ -23,6 +23,7 @@ const salesLinks = [
 ];
 
 const roleNames = {
+  owner: 'Owner',
   admin: 'Administrator',
   manager: 'Manager',
   cashier: 'Cashier',
@@ -114,14 +115,15 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const role = user?.role ?? 'cashier';
+  const isOwner = role === 'owner';
   const isAdmin = role === 'admin';
   const isManager = role === 'manager';
-  const showProducts = isAdmin || isManager;
-  const showManagement = isAdmin || isManager;
+  const showProducts = isOwner || isAdmin || isManager;
+  const showManagement = isOwner || isAdmin || isManager;
 
   const workspaceLinks = [
     { to: '/dashboard', label: 'Dashboard', icon: Gauge, end: true },
-    ...(isAdmin ? [{ to: '/audit-logs', label: 'Audit Logs', icon: Activity }] : []),
+    ...(isOwner || isAdmin ? [{ to: '/audit-logs', label: 'Audit Logs', icon: Activity }] : []),
   ];
 
   const inventoryLinks = showProducts

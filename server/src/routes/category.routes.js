@@ -7,9 +7,9 @@ import { asyncHandler } from '../utils/async-handler.js';
 const router = Router();
 
 router.use(requireAuth);
-router.get('/', allowRoles('admin', 'manager'), asyncHandler(getCategories));
-router.post('/', allowRoles('admin', 'manager'), asyncHandler(createCategory));
-router.get('/:id', allowRoles('admin', 'manager'), asyncHandler(getCategory));
-router.put('/:id', allowRoles('admin', 'manager'), asyncHandler(updateCategory));
+router.get('/', allowRoles('owner', 'admin', 'manager'), asyncHandler(getCategories));
+router.post('/', allowRoles('owner', 'admin', 'manager'), asyncHandler(createCategory));
+router.get('/:id', allowRoles('owner', 'admin', 'manager'), asyncHandler(getCategory));
+router.put('/:id', allowRoles('owner', 'admin', 'manager'), asyncHandler(updateCategory));
 
 export default router;

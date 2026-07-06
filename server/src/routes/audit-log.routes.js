@@ -5,7 +5,7 @@ import { allowRoles } from '../middlewares/rbac.middleware.js';
 
 const router = Router();
 
-router.get('/', requireAuth, allowRoles('admin'), getAuditLogs);
-router.get('/:id', requireAuth, allowRoles('admin'), getAuditLog);
+router.get('/', requireAuth, allowRoles('owner', 'admin'), getAuditLogs);
+router.get('/:id', requireAuth, allowRoles('owner', 'admin'), getAuditLog);
 
 export default router;

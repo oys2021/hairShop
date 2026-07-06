@@ -6,6 +6,6 @@ import { uploadMiddleware } from '../middlewares/upload.middleware.js';
 
 const router = Router();
 
-router.post('/', requireAuth, allowRoles('admin', 'manager'), uploadMiddleware.single('image'), uploadImage);
+router.post('/', requireAuth, allowRoles('owner', 'admin', 'manager'), uploadMiddleware.single('image'), uploadImage);
 
 export default router;

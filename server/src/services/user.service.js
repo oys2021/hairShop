@@ -10,7 +10,8 @@ import { buildPaginationMeta, readPagination } from '../utils/pagination.js';
 import { HttpError } from '../utils/http-error.js';
 import { toPublicUser } from '../repositories/auth.repository.js';
 
-const VALID_ROLES = ['admin', 'manager', 'cashier'];
+const VALID_ROLES = ['owner', 'admin', 'manager', 'cashier'];
+const ROLE_ERROR = 'Role must be owner, admin, manager, or cashier';
 
 export async function readUsers(query) {
   const pagination = readPagination(query);
@@ -40,7 +41,7 @@ export async function addUser(payload) {
   const role = payload.role ? String(payload.role).trim().toLowerCase() : 'cashier';
 
   if (!VALID_ROLES.includes(role)) {
-    throw new HttpError(400, 'Role must be admin, manager, or cashier');
+    throw new HttpError(400, ROLE_ERROR);
   }
 
   const user = await createUser({
@@ -57,7 +58,7 @@ export async function addUser(payload) {
 
 export async function editUser(id, payload) {
   if (payload.role && !VALID_ROLES.includes(String(payload.role).trim().toLowerCase())) {
-    throw new HttpError(400, 'Role must be admin, manager, or cashier');
+    throw new HttpError(400, ROLE_ERROR);
   }
 
   const user = await updateUser(id, {
